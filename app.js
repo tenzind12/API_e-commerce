@@ -23,14 +23,15 @@ const port = process.env.PORT || 5000;
 
 app.use(morgan('tiny'));
 app.use(express.json()); // to access json in req.body
-app.use(cookieParser()); // to access cookies
+app.use(cookieParser(process.env.JWT_SECRET)); // to access cookies
 
 app.get('/', (req, res) => {
   res.send('exommserce');
 });
 
 app.get('/api/v1', (req, res) => {
-  console.log(req.cookies);
+  // console.log(req.cookies);
+  console.log(req.signedCookies);
   res.send('exommserce');
 });
 
