@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const { attachCookiesToResponse } = require('../utils');
 
+// R E G I S T E R
 const register = async (req, res) => {
   const { email, name, password } = req.body;
 
@@ -24,12 +25,40 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };
 
+// L O G I N
 const login = async (req, res) => {
-  res.send('login');
+  // if fields are filled
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new CustomError.BadRequestError('Please provide email and password');
+  }
+
+  // if user exist
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new CustomError.UnauthenticatedError('Invalid credentials');
+  }
+
+  // if password is correct
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    throw new CustomError.UnauthenticatedError('Invalid credentials');
+  }
+
+  // creating token
+  const tokenUser = { name: user.name, userId: user._id, role: user.role };
+  attachCookiesToResponse({ res, user: tokenUser });
+  res.status(StatusCodes.ACCEPTED).json({ user: tokenUser });
 };
 
+// L O G O U T
 const logout = async (req, res) => {
-  res.send('logout');
+  res.cookie('token', 'logout', {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+
+  res.status(StatusCodes.OK).json({ msg: 'user logged out' });
 };
 
 module.exports = { register, login, logout };
