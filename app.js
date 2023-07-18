@@ -24,7 +24,7 @@ const port = process.env.PORT || 5000;
 
 app.use(morgan('tiny'));
 app.use(express.json()); // to access json in req.body
-app.use(cookieParser(process.env.JWT_SECRET)); // to access cookies
+app.use(cookieParser(process.env.JWT_SECRET)); // to access cookies and to sign
 
 app.get('/', (req, res) => {
   res.send('exommserce');
