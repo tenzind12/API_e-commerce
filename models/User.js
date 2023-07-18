@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-// hashing the password
+// hashing the password before saving
 UserSchema.pre('save', async function () {
   const salt = await bycrypt.genSalt(10);
   this.password = await bycrypt.hash(this.password, salt);
