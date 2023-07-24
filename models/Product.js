@@ -1,6 +1,6 @@
-const { Mongoose, default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 
-const ProductSchema = new Mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -37,6 +37,7 @@ const ProductSchema = new Mongoose.Schema(
     },
     colors: {
       type: [String],
+      default: ['#222'],
       required: true,
     },
     freeShipping: {
