@@ -29,14 +29,20 @@ const createReview = async (req, res) => {
 
 // getting all reviews
 const getAllReviews = async (req, res) => {
-  const reviews = await Review.find({});
+  // populate method can get the details of the product linked to the review (with the help of review model (product linked))
+  const reviews = await Review.find({})
+    .populate({ path: 'product', select: 'name price company' })
+    .populate({ path: 'user', select: 'name' });
   res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 };
 
 // get single review
 const getSingleReview = async (req, res) => {
   const { id: reviewId } = req.params;
-  const review = await Review.findOne({ _id: reviewId });
+  const review = await Review.findOne({ _id: reviewId }).populate({
+    path: 'product',
+    select: 'name price company',
+  });
 
   if (!review) {
     throw new CustomError.BadRequestError(`No review with the id: ${reviewId}`);
