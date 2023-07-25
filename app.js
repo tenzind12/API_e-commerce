@@ -8,6 +8,7 @@ const app = express();
 // rest of the packages
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
 
 // db
 const connectDb = require('./db/connect');
@@ -26,6 +27,8 @@ const port = process.env.PORT || 5000;
 app.use(morgan('tiny'));
 app.use(express.json()); // to access json in req.body
 app.use(cookieParser(process.env.JWT_SECRET)); // to access cookies and to sign
+app.use(express.static('./public'));
+app.use(fileUpload());
 
 app.get('/', (req, res) => {
   res.send('exommserce');
