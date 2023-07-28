@@ -32,14 +32,9 @@ app.use(cookieParser(process.env.JWT_SECRET)); // to access cookies and to sign
 app.use(express.static('./public'));
 app.use(fileUpload());
 
-app.get('/', (req, res) => {
-  res.send('exommserce');
-});
-
 app.get('/api/v1', (req, res) => {
-  // console.log(req.cookies);
-  console.log(req.signedCookies);
-  res.send('exommserce');
+  // console.log(req.signedCookies);
+  res.send('ecommerce');
 });
 
 app.use('/api/v1/auth', authRouter);
