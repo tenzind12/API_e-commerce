@@ -15,20 +15,20 @@ This is an E-Commerce API built with Node.js and Express.js, utilizing MongoDB f
 
 ## Installation
 
-1. Clone the repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/tenzind12/API_e-commerce
 ```
 
-1. Install dependencies:
+### Install dependencies
 
 ```bash
 cd nodejs-express-ecommerce-api
 npm install
 ```
 
-1. Set up the environment variables:
+### Set up the environment variables
 
 ```bash
 MONGODB_URI=your_mongodb_connection_string
