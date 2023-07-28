@@ -43,16 +43,10 @@ app.use(cors());
 app.use(xss());
 app.use(mongoSanitize());
 
-app.use(morgan('tiny'));
 app.use(express.json()); // to access json in req.body
 app.use(cookieParser(process.env.JWT_SECRET)); // to access cookies and to sign
 app.use(express.static('./public'));
 app.use(fileUpload());
-
-app.get('/api/v1', (req, res) => {
-  // console.log(req.signedCookies);
-  res.send('ecommerce');
-});
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
